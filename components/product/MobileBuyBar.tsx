@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Heart, ShoppingCart, Zap } from "lucide-react";
+import { blackHanSans } from "@/lib/fonts";
 
 interface MobileBuyBarProps {
   price: number;
@@ -29,7 +30,9 @@ export default function MobileBuyBar({ price, quantity }: MobileBuyBarProps) {
           <span className="text-[10px] leading-tight text-muted-foreground">
             {"총 상품금액"}
           </span>
-          <span className="text-sm font-bold leading-tight tabular-nums text-foreground">
+          <span
+            className={`text-xl font-extrabold leading-none tracking-tight tabular-nums text-foreground sm:text-2xl ${blackHanSans.className}`}
+          >
             {total.toLocaleString("ko-KR")}
             {"원"}
           </span>

@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { blackHanSans } from "@/lib/fonts";
 
 type BannerProps = {
     title: string;
@@ -54,7 +55,11 @@ function ProductTile({price, title, subtitle, imageUrl}: ProductProps) {
 
             <div className="absolute left-5 bottom-5 md:left-6 md:bottom-6 flex items-center justify-between gap-3">
                 <div className="min-w-0">
-                    <div className="text-xl font-extrabold">{price}</div>
+                    <div
+                        className={`text-xl font-extrabold leading-none tracking-tight text-foreground sm:text-2xl ${blackHanSans.className}`}
+                    >
+                        {price}
+                    </div>
                     <div className="mt-2 text-sm md:text-base font-semibold leading-snug">{title}</div>
                     {subtitle && <div className="mt-1 text-xs md:text-sm text-slate-600">{subtitle}</div>}
                     <button className="mt-3 text-xs md:text-sm text-slate-700 underline underline-offset-4">
