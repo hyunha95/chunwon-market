@@ -31,6 +31,7 @@ type RankingItem = {
 };
 
 const CATEGORIES = [
+  "전체",
   "주방용품",
   "시즌/시리즈",
   "청소/욕실",
@@ -134,8 +135,8 @@ function formatNumber(n: number) {
 }
 
 export default function CategoryRanking() {
-  const ITEMS_PER_PAGE = 12;
-  const MAX_RANKING_ITEMS = 36;
+  const ITEMS_PER_PAGE = 6;
+  const MAX_RANKING_ITEMS = 18;
   const [activeCategory, setActiveCategory] = useState(CATEGORIES[0]);
   const [currentPage, setCurrentPage] = useState(0);
   const categoryScrollRef = useRef<HTMLDivElement | null>(null);
@@ -222,7 +223,10 @@ export default function CategoryRanking() {
     }
   };
 
-  const filtered = RANKING_ITEMS.filter((item) => item.category === activeCategory);
+  const filtered =
+    activeCategory === "전체"
+      ? RANKING_ITEMS
+      : RANKING_ITEMS.filter((item) => item.category === activeCategory);
   const rankingSource = (filtered.length ? filtered : RANKING_ITEMS).slice(
     0,
     MAX_RANKING_ITEMS,
