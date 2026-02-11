@@ -12,7 +12,7 @@ import {
 const NAV_ITEMS = [
   { label: "홈", icon: Home, href: "/" },
   { label: "카테고리", icon: LayoutGrid, href: "#" },
-  { label: "검색", icon: Search, href: "#" },
+  { label: "검색", icon: Search, href: "/search" },
   { label: "주문", icon: ClipboardList, href: "#" },
   { label: "장바구니", icon: ShoppingCart, href: "#" },
 ];
