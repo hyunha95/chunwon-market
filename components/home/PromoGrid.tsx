@@ -151,7 +151,7 @@ function LifestyleBanner() {
 
 export default function PromoGrid() {
     return (
-        <div className="mx-auto w-full max-w-6xl px-4 py-6">
+        <div className="w-full py-6">
             <div className="space-y-4">
                 {/* Row 1: (왼쪽 큰 배너 8) + (오른쪽 3타일 4) */}
                 <section className="grid grid-cols-1 md:grid-cols-12 gap-4">
