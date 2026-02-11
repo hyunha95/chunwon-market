@@ -18,7 +18,7 @@ export default function RecommendedProducts() {
       </Link>
 
       {/* Mobile: horizontal scroll */}
-      <div className="flex gap-3 overflow-x-auto scrollbar-hide md:hidden pb-2">
+      <div className="flex gap-1 overflow-x-auto scrollbar-hide md:hidden pb-2">
         {items.map((product) => (
           <div key={product.id} className="w-[160px] flex-shrink-0">
             <ProductCard product={product} />
