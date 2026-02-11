@@ -134,14 +134,14 @@ export default function ProductCard({ product, rank }: ProductCardProps) {
                 return (
                   <Star
                     key={i}
-                    className={`h-5 w-5 ${
+                    className={`h-4 w-4 ${
                       filled ? "fill-foreground text-foreground" : "text-muted-foreground"
                     }`}
                   />
                 );
               })}
             </div>
-            <div className="text-xl font-black text-foreground">
+            <div className="font-black text-foreground pb-0.5">
               {formatReviewCount(product.reviewCount)}
             </div>
           </div>

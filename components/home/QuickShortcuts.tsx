@@ -34,7 +34,7 @@ export default function QuickShortcuts() {
           return (
             <button
               key={shortcut.id}
-              className="flex flex-col items-center gap-2 rounded-lg bg-card p-3 transition-colors hover:bg-secondary"
+              className="flex flex-col items-center gap-2 rounded-lg bg-card p-3"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/30">
                 <Icon className="h-5 w-5 text-secondary" />

@@ -2,9 +2,9 @@ import HeroCarousel from "@/components/home/HeroCarousel";
 import QuickShortcuts from "@/components/home/QuickShortcuts";
 import RecommendedProducts from "@/components/home/RecommendedProducts";
 import CategoryRanking from "@/components/home/CategoryRanking";
-import PromoGrid from "@/components/home/PromoGrid";
 import AppDownloadCTA from "@/components/home/AppDownloadCTA";
 import { Separator } from "@/components/ui/separator";
+import PromoGrid from "@/components/home/PromoGrid";
 
 export default function HomePage() {
   return (
@@ -14,9 +14,11 @@ export default function HomePage() {
       <Separator />
       <RecommendedProducts />
       <Separator />
+      <PromoGrid />
+
+
       <CategoryRanking />
       <Separator />
-      <PromoGrid />
       <Separator />
       <AppDownloadCTA />
     </div>

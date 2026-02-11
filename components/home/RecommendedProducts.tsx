@@ -2,20 +2,20 @@
 
 import ProductCard from "@/components/product/ProductCard";
 import { PRODUCTS } from "@/lib/dummy-data";
+import Link from "next/link";
+import {ChevronRight} from "lucide-react";
 
 export default function RecommendedProducts() {
-  const items = PRODUCTS.slice(0, 8);
+  const items = PRODUCTS.slice(0, 6);
 
   return (
     <section className="py-6">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-bold text-foreground md:text-xl">
-          오늘 추천 상품
+      <Link href="/" className="mb-4 flex items-center justify-center">
+        <h2 className="text-lg font-bold text-foreground md:text-2xl">
+          고객님을 위한 오늘 추천상품
         </h2>
-        <button className="text-xs text-muted-foreground hover:text-accent transition-colors">
-          전체보기 &gt;
-        </button>
-      </div>
+        <ChevronRight className="h-8 w-8 text-foreground" />
+      </Link>
 
       {/* Mobile: horizontal scroll */}
       <div className="flex gap-3 overflow-x-auto scrollbar-hide md:hidden pb-2">
