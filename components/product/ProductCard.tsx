@@ -50,7 +50,7 @@ export default function ProductCard({ product, rank }: ProductCardProps) {
   }, [product.rating]);
 
   return (
-    <div className="overflow-hidden bg-card">
+    <div className="overflow-hidden bg-card rounded-t-2xl">
       {/* 썸네일/오버레이 */}
       <div className="relative aspect-[3/4] bg-muted">
         <Link href={`/products/${product.id}`} className="block h-full w-full">
