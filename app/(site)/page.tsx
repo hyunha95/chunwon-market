@@ -5,6 +5,7 @@ import CategoryRanking from "@/components/home/CategoryRanking";
 import AppDownloadCTA from "@/components/home/AppDownloadCTA";
 import { Separator } from "@/components/ui/separator";
 import PromoGrid from "@/components/home/PromoGrid";
+import WinterCarCareSection from "@/components/home/WinterCarCareSection";
 
 export default function HomePage() {
   return (
@@ -15,10 +16,10 @@ export default function HomePage() {
       <RecommendedProducts />
       <Separator />
       <PromoGrid />
-
-
-      <CategoryRanking />
       <Separator />
+      <WinterCarCareSection />
+      <Separator />
+      <CategoryRanking />
       <Separator />
       <AppDownloadCTA />
     </div>

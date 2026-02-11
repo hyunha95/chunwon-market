@@ -61,7 +61,7 @@ export default function HeroCarousel() {
       <Button
         variant="ghost"
         size="sm"
-        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-card/60 text-foreground hover:bg-card/90"
+        className="absolute left-3 top-1/2 hidden -translate-y-1/2 bg-card/60 p-0 text-foreground hover:bg-card/90 md:inline-flex md:h-10 md:w-10 md:rounded-full"
         onClick={prev}
       >
         <ChevronLeft className="h-5 w-5" />
@@ -70,7 +70,7 @@ export default function HeroCarousel() {
       <Button
         variant="ghost"
         size="sm"
-        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-card/60 text-foreground hover:bg-card/90"
+        className="absolute right-3 top-1/2 hidden -translate-y-1/2 bg-card/60 p-0 text-foreground hover:bg-card/90 md:inline-flex md:h-10 md:w-10 md:rounded-full"
         onClick={next}
       >
         <ChevronRight className="h-5 w-5" />

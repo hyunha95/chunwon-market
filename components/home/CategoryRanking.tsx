@@ -17,6 +17,7 @@ import {
     Truck,
     Zap,
 } from "lucide-react";
+import { blackHanSans } from "@/lib/fonts";
 
 type RankingItem = {
     id: number;
@@ -507,7 +508,9 @@ export default function CategoryRanking() {
                                 NEW
                               </span>
                                                         )}
-                                                        <p className="text-xl font-extrabold leading-none text-slate-900">
+                                                        <p
+                                                            className={`text-xl font-extrabold leading-none tracking-tight text-foreground sm:text-2xl ${blackHanSans.className}`}
+                                                        >
                                                             {formatNumber(product.price)}원
                                                         </p>
                                                     </div>
@@ -591,7 +594,9 @@ export default function CategoryRanking() {
                                                             NEW
                                                         </div>
                                                     )}
-                                                    <p className="text-lg font-extrabold leading-none text-slate-900 md:text-4xl">
+                                                    <p
+                                                        className={`text-xl font-extrabold leading-none tracking-tight text-foreground sm:text-2xl ${blackHanSans.className}`}
+                                                    >
                                                         {formatNumber(product.price)}원
                                                     </p>
                                                     <p className="mt-0.5 line-clamp-2 text-xs font-medium leading-snug text-slate-800 md:mt-2 md:text-base">

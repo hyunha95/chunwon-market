@@ -5,10 +5,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Heart, ShoppingBag, Truck, Star } from "lucide-react";
 import type { Product } from "@/lib/dummy-data";
-import { Black_Han_Sans } from "next/font/google";
+import { blackHanSans } from "@/lib/fonts";
 import Image from "next/image";
-
-const blackHanSans = Black_Han_Sans({ subsets: ["latin"], weight: "400" });
 
 interface ProductCardProps {
   product: Product;

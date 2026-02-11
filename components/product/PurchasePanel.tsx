@@ -24,6 +24,7 @@ import {
 import type { ProductDetail } from "@/lib/product-detail-mocks";
 import { PAYMENT_BENEFITS } from "@/lib/product-detail-mocks";
 import { useToast } from "@/hooks/use-toast";
+import { blackHanSans } from "@/lib/fonts";
 
 interface PurchasePanelProps {
   product: ProductDetail;
@@ -139,7 +140,9 @@ export default function PurchasePanel({ product }: PurchasePanelProps) {
       {/* ---- Price Block ---- */}
       <div className="flex flex-col gap-1.5">
         {product.originalPrice && (
-          <span className="text-sm text-muted-foreground line-through">
+          <span
+            className={`text-xl font-extrabold leading-none tracking-tight text-muted-foreground line-through sm:text-2xl ${blackHanSans.className}`}
+          >
             {product.originalPrice.toLocaleString("ko-KR")}
             {"원"}
           </span>
@@ -151,9 +154,11 @@ export default function PurchasePanel({ product }: PurchasePanelProps) {
               {"%"}
             </span>
           )}
-          <span className="text-xl font-bold text-foreground md:text-2xl">
+          <span
+            className={`text-xl font-extrabold leading-none tracking-tight text-foreground sm:text-2xl ${blackHanSans.className}`}
+          >
             {product.price.toLocaleString("ko-KR")}
-            <span className="text-base font-bold md:text-lg">{"원"}</span>
+            {"원"}
           </span>
         </div>
 
@@ -291,10 +296,12 @@ export default function PurchasePanel({ product }: PurchasePanelProps) {
           {"총 상품금액"}
         </span>
         <div className="flex items-baseline gap-0.5">
-          <span className="text-lg font-bold tabular-nums text-foreground md:text-xl">
+          <span
+            className={`text-xl font-extrabold leading-none tracking-tight tabular-nums text-foreground sm:text-2xl ${blackHanSans.className}`}
+          >
             {totalPrice.toLocaleString("ko-KR")}
+            {"원"}
           </span>
-          <span className="text-xs font-bold text-foreground md:text-sm">{"원"}</span>
         </div>
       </div>
 
