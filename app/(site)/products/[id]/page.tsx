@@ -2,6 +2,9 @@
 
 import {useState, useEffect} from "react";
 import Link from "next/link";
+import {useParams} from "next/navigation";
+import {useRecordInteraction} from "@/hooks/use-product-recommendations";
+import {getUserId} from "@/lib/user";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,7 +19,8 @@ import ProductMedia from "@/components/product/ProductMedia";
 import PurchasePanel from "@/components/product/PurchasePanel";
 import MobileBuyBar from "@/components/product/MobileBuyBar";
 import ProductTabs from "@/components/product/ProductTabs";
-import ProductCard from "@/components/product/ProductCard";
+import RelatedProducts from "@/components/product/RelatedProducts";
+import { SimilarProducts } from "@/components/product/SimilarProducts";
 import {ChevronRight} from "lucide-react";
 import {
   PRODUCT_DETAIL,
@@ -135,12 +139,28 @@ function RelatedSkeleton() {
 /* ================================================================== */
 
 export default function ProductDetailPage() {
+  const params = useParams();
+  const productId = params.id as string;
   const [loading, setLoading] = useState(true);
+  const recordInteraction = useRecordInteraction();
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 600);
     return () => clearTimeout(timer);
   }, []);
+
+  // 상품 조회 시 VIEW 이벤트 기록
+  useEffect(() => {
+    if (!productId) return;
+
+    const userId = getUserId();
+    recordInteraction.mutate({
+      userId,
+      productId: parseInt(productId),
+      interactionType: 'VIEW',
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productId]); // recordInteraction은 의도적으로 제외 (무한루프 방지)
 
   const product = PRODUCT_DETAIL;
 
@@ -214,49 +234,23 @@ export default function ProductDetailPage() {
 
           <Separator className="my-6 md:my-8"/>
 
-          {/* Related Products */}
-          <section>
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-base font-bold text-foreground md:text-lg">
-                함께 보면 좋은 상품
-              </h2>
-              <Link
-                href="#"
-                className="flex items-center text-xs text-muted-foreground hover:text-accent"
-              >
-                전체보기
-                <ChevronRight className="h-3.5 w-3.5"/>
-              </Link>
-            </div>
-
-            {loading ? (
-              <RelatedSkeleton/>
-            ) : (
-              <>
-                {/* Mobile: horizontal scroll */}
-                <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide md:hidden">
-                  {RELATED_PRODUCTS.map((p) => (
-                    <div key={p.id} className="w-36 flex-shrink-0">
-                      <ProductCard product={p}/>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Desktop: grid */}
-                <div className="hidden grid-cols-2 gap-3 md:grid lg:grid-cols-4 xl:grid-cols-5">
-                  {RELATED_PRODUCTS.map((p) => (
-                    <ProductCard key={p.id} product={p}/>
-                  ))}
-                </div>
-              </>
-            )}
-          </section>
+          {/* Related Products - API 기반 추천 */}
+          {loading ? (
+            <RelatedSkeleton/>
+          ) : (
+            <RelatedProducts productId={parseInt(productId)} limit={6} />
+          )}
         </div>
 
         {/* ✅ DESKTOP ONLY: sticky PurchasePanel */}
         <aside className="hidden w-full md:block md:w-1/2 lg:w-[40%] md:sticky md:top-[40px] md:self-start">
           {loading ? <PanelSkeleton/> : <PurchasePanel product={product}/>}
         </aside>
+      </div>
+
+      {/* 함께 보면 좋은 상품 - 유사 상품 추천 (전체 너비) */}
+      <div className="mt-8 md:mt-12">
+        {!loading && <SimilarProducts productId={parseInt(productId)} limit={6} />}
       </div>
 
       {/* ---- Mobile Bottom Buy Bar ---- */}

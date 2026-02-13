@@ -19,6 +19,7 @@ function formatReviewCount(n: number) {
 }
 
 export default function ProductCard({ product, rank }: ProductCardProps) {
+  console.log(product);
   const [liked, setLiked] = useState(false);
 
   const onToggleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -47,8 +48,8 @@ export default function ProductCard({ product, rank }: ProductCardProps) {
           {/* ✅ group 추가: group-hover 정상 동작 */}
           <Link href={`/products/${product.id}`} className="group block h-full w-full">
             <Image
-                src="https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?q=80&w=1122&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="product image"
+                src={product.image || "https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?q=80&w=1122&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
+                alt={product.name}
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 width={1122}
                 height={4000}
