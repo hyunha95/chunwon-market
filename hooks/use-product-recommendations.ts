@@ -212,7 +212,7 @@ export function useRecordInteraction() {
         queryKey: productKeys.personalized(variables.userId),
       });
       queryClient.invalidateQueries({
-        queryKey: productKeys.productBased(variables.productId),
+        queryKey: productKeys.productBased(parseInt(variables.productId)),
       });
     },
   });

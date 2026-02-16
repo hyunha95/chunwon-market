@@ -40,7 +40,7 @@ export default function ApiTestPage() {
     recordInteractionMutation.mutate(
       {
         userId,
-        productId: parseInt(productId),
+        productId,
         interactionType: type,
       },
       {

@@ -180,36 +180,36 @@ export default function PurchasePanel({ product }: PurchasePanelProps) {
       <Separator />
 
       {/* ---- Payment Benefits ---- */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-1">
-          <Info className="h-3.5 w-3.5 text-muted-foreground" />
-          <span className="text-xs font-medium text-foreground">
-            {"결제 혜택"}
-          </span>
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          {visibleBenefits.map((b) => (
-            <Badge
-              key={b.label}
-              variant="outline"
-              className="cursor-default gap-1 border-border bg-card px-2 py-1 text-[11px] text-muted-foreground hover:border-muted-foreground/40"
-            >
-              <span className="font-medium text-foreground">{b.label}</span>
-              {b.desc}
-            </Badge>
-          ))}
-        </div>
-        {PAYMENT_BENEFITS.length > 3 && (
-          <button
-            className="self-start text-[11px] text-muted-foreground underline hover:text-accent"
-            onClick={() => setBenefitsExpanded(!benefitsExpanded)}
-          >
-            {benefitsExpanded ? "접기" : `+${PAYMENT_BENEFITS.length - 3}개 더보기`}
-          </button>
-        )}
-      </div>
+      {/*<div className="flex flex-col gap-2">*/}
+      {/*  <div className="flex items-center gap-1">*/}
+      {/*    <Info className="h-3.5 w-3.5 text-muted-foreground" />*/}
+      {/*    <span className="text-xs font-medium text-foreground">*/}
+      {/*      {"결제 혜택"}*/}
+      {/*    </span>*/}
+      {/*  </div>*/}
+      {/*  <div className="flex flex-wrap gap-1.5">*/}
+      {/*    {visibleBenefits.map((b) => (*/}
+      {/*      <Badge*/}
+      {/*        key={b.label}*/}
+      {/*        variant="outline"*/}
+      {/*        className="cursor-default gap-1 border-border bg-card px-2 py-1 text-[11px] text-muted-foreground hover:border-muted-foreground/40"*/}
+      {/*      >*/}
+      {/*        <span className="font-medium text-foreground">{b.label}</span>*/}
+      {/*        {b.desc}*/}
+      {/*      </Badge>*/}
+      {/*    ))}*/}
+      {/*  </div>*/}
+      {/*  {PAYMENT_BENEFITS.length > 3 && (*/}
+      {/*    <button*/}
+      {/*      className="self-start text-[11px] text-muted-foreground underline hover:text-accent"*/}
+      {/*      onClick={() => setBenefitsExpanded(!benefitsExpanded)}*/}
+      {/*    >*/}
+      {/*      {benefitsExpanded ? "접기" : `+${PAYMENT_BENEFITS.length - 3}개 더보기`}*/}
+      {/*    </button>*/}
+      {/*  )}*/}
+      {/*</div>*/}
 
-      <Separator />
+      {/*<Separator />*/}
 
       {/* ---- Delivery Section ---- */}
       <div className="flex flex-col gap-2">
@@ -239,23 +239,23 @@ export default function PurchasePanel({ product }: PurchasePanelProps) {
         </div>
 
         {/* Pickup */}
-        <div className="flex items-start gap-2.5 rounded-lg border border-border bg-card p-2.5 md:gap-3 md:p-3">
-          <Store className="mt-0.5 h-4 w-4 flex-shrink-0 text-secondary" />
-          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-            <span className="text-xs font-medium text-foreground md:text-sm">
-              {"매장픽업"}
-            </span>
-            <span className="text-[10px] text-muted-foreground md:text-[11px]">
-              {product.pickupInfo.message}
-            </span>
-          </div>
-          <AddressPickupModal>
-            <button className="flex min-h-[44px] flex-shrink-0 items-center text-[11px] text-muted-foreground hover:text-accent md:min-h-0 md:text-xs">
-              {"선택"}
-              <ChevronRight className="h-3 w-3" />
-            </button>
-          </AddressPickupModal>
-        </div>
+        {/*<div className="flex items-start gap-2.5 rounded-lg border border-border bg-card p-2.5 md:gap-3 md:p-3">*/}
+        {/*  <Store className="mt-0.5 h-4 w-4 flex-shrink-0 text-secondary" />*/}
+        {/*  <div className="flex min-w-0 flex-1 flex-col gap-0.5">*/}
+        {/*    <span className="text-xs font-medium text-foreground md:text-sm">*/}
+        {/*      {"매장픽업"}*/}
+        {/*    </span>*/}
+        {/*    <span className="text-[10px] text-muted-foreground md:text-[11px]">*/}
+        {/*      {product.pickupInfo.message}*/}
+        {/*    </span>*/}
+        {/*  </div>*/}
+        {/*  <AddressPickupModal>*/}
+        {/*    <button className="flex min-h-[44px] flex-shrink-0 items-center text-[11px] text-muted-foreground hover:text-accent md:min-h-0 md:text-xs">*/}
+        {/*      {"선택"}*/}
+        {/*      <ChevronRight className="h-3 w-3" />*/}
+        {/*    </button>*/}
+        {/*  </AddressPickupModal>*/}
+        {/*</div>*/}
       </div>
 
       <Separator />

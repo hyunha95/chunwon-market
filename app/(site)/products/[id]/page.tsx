@@ -156,7 +156,7 @@ export default function ProductDetailPage() {
     const userId = getUserId();
     recordInteraction.mutate({
       userId,
-      productId: parseInt(productId),
+      productId,
       interactionType: 'VIEW',
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

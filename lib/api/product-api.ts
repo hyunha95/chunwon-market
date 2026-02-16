@@ -13,7 +13,7 @@ export interface ProductRecommendation {
 
 export interface UserInteraction {
   userId: string;
-  productId: number;
+  productId: string;
   interactionType: 'VIEW' | 'CART' | 'PURCHASE' | 'LIKE';
 }
 
