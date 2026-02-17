@@ -210,40 +210,32 @@ export default function Header({ user }: HeaderProps) {
           </div>
 
           {/* Right Icons */}
-          <div className="flex items-center gap-1 md:gap-2">
+          <div className="flex items-center gap-0.5 md:gap-1">
             {/* Mobile Search */}
-            <Button
-              asChild
-              variant="ghost"
-              size="sm"
-              className="md:hidden text-foreground hover:text-accent"
+            <Link
+              href="/search"
+              className="inline-flex items-center justify-center rounded-lg p-2 text-foreground transition-colors hover:bg-muted md:hidden"
             >
-              <Link href="/search">
-                <Search className="h-5 w-5" />
-                <span className="sr-only">검색</span>
-              </Link>
-            </Button>
+              <Search className="h-5 w-5" />
+              <span className="sr-only">검색</span>
+            </Link>
 
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button
-                    className="hidden h-8 w-8 items-center justify-center rounded-full ring-2 ring-transparent transition-all hover:ring-accent/50 focus-visible:outline-none focus-visible:ring-accent md:flex"
+                    className="hidden cursor-pointer flex-col items-center gap-1 rounded-lg px-3 py-1.5 text-foreground transition-colors hover:bg-muted focus-visible:outline-none md:flex"
                   >
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src={user.picture || undefined} alt={user.name || ""} />
-                      <AvatarFallback className="bg-accent/20 text-xs font-medium text-accent-foreground">
-                        {user.name?.charAt(0)?.toUpperCase() || "U"}
-                      </AvatarFallback>
-                    </Avatar>
+                    <User className="h-5 w-5" />
+                    <span className="text-[10px]">마이</span>
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-64">
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex items-center gap-3">
-                      <Avatar className="h-10 w-10">
+                      <Avatar className="h-10 w-10 flex-shrink-0">
                         <AvatarImage src={user.picture || undefined} alt={user.name || ""} />
-                        <AvatarFallback className="bg-accent/20 text-sm font-medium text-accent-foreground">
+                        <AvatarFallback className="bg-muted text-sm font-medium">
                           {user.name?.charAt(0)?.toUpperCase() || "U"}
                         </AvatarFallback>
                       </Avatar>
@@ -270,30 +262,22 @@ export default function Header({ user }: HeaderProps) {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button
-                asChild
-                variant="ghost"
-                size="sm"
-                className="hidden flex-col items-center gap-0.5 text-foreground hover:text-accent md:flex"
+              <a
+                href="/auth/login"
+                className="hidden flex-col items-center gap-1 rounded-lg px-3 py-1.5 text-foreground transition-colors hover:bg-muted md:flex"
               >
-                <a href="/auth/login">
-                  <User className="h-5 w-5" />
-                  <span className="text-[10px]">로그인</span>
-                </a>
-              </Button>
+                <User className="h-5 w-5" />
+                <span className="text-[10px]">로그인</span>
+              </a>
             )}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="hidden flex-col items-center gap-0.5 text-foreground hover:text-accent md:flex"
+            <button
+              className="hidden cursor-pointer flex-col items-center gap-1 rounded-lg px-3 py-1.5 text-foreground transition-colors hover:bg-muted md:flex"
             >
               <Heart className="h-5 w-5" />
               <span className="text-[10px]">찜</span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="relative flex flex-col items-center gap-0.5 text-foreground hover:text-accent"
+            </button>
+            <button
+              className="relative flex cursor-pointer flex-col items-center gap-1 rounded-lg px-3 py-1.5 text-foreground transition-colors hover:bg-muted"
             >
               <div className="relative">
                 <ShoppingCart className="h-5 w-5" />
@@ -302,7 +286,7 @@ export default function Header({ user }: HeaderProps) {
                 </Badge>
               </div>
               <span className="hidden text-[10px] md:block">장바구니</span>
-            </Button>
+            </button>
           </div>
         </div>
       </div>
@@ -315,7 +299,7 @@ export default function Header({ user }: HeaderProps) {
           <Button
             variant="ghost"
             size="sm"
-            className="flex items-center gap-1.5 font-medium text-foreground hover:text-accent"
+            className="flex items-center gap-1.5 font-medium text-foreground hover:text-foreground"
             onClick={() => setMegaMenuOpen(!megaMenuOpen)}
           >
             <Menu className="h-4 w-4" />

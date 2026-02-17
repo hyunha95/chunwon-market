@@ -5,7 +5,7 @@ import ProductCard from "@/components/product/ProductCard";
 import Link from "next/link";
 import { ChevronRight, Loader2 } from "lucide-react";
 import { usePersonalizedRecommendationsWithDetails } from "@/hooks/use-product-recommendations";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useUser } from "@/components/providers/user-provider";
 import { getUserId } from "@/lib/user";
 
 interface PersonalizedRecommendationsProps {

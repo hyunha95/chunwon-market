@@ -4,7 +4,7 @@ import {useState, useEffect} from "react";
 import Link from "next/link";
 import {useParams} from "next/navigation";
 import {useRecordInteraction} from "@/hooks/use-product-recommendations";
-import {useUser} from "@auth0/nextjs-auth0/client";
+import {useUser} from "@/components/providers/user-provider";
 import {getUserId} from "@/lib/user";
 import {
   Breadcrumb,

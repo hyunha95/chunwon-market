@@ -1,9 +1,9 @@
 import React from "react"
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_KR } from "next/font/google";
-import { Auth0Provider } from "@auth0/nextjs-auth0/client";
 import { Toaster } from "@/components/ui/toaster";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { UserProvider } from "@/components/providers/user-provider";
 import { AxiosTokenProvider } from "@/components/providers/axios-token-provider";
 import { auth0 } from "@/lib/auth0";
 
@@ -39,14 +39,14 @@ export default async function RootLayout({
   return (
     <html lang="ko" className={`${notoSansKR.variable} bg-background`}>
       <body className="font-sans antialiased">
-        <Auth0Provider user={session?.user}>
+        <UserProvider user={session?.user ?? null}>
           <AxiosTokenProvider>
             <QueryProvider>
               {children}
               <Toaster />
             </QueryProvider>
           </AxiosTokenProvider>
-        </Auth0Provider>
+        </UserProvider>
       </body>
     </html>
   );
