@@ -21,12 +21,10 @@ import PurchasePanel from "@/components/product/PurchasePanel";
 import MobileBuyBar from "@/components/product/MobileBuyBar";
 import ProductTabs from "@/components/product/ProductTabs";
 import RelatedProducts from "@/components/product/RelatedProducts";
-import { SimilarProducts } from "@/components/product/SimilarProducts";
 import {ChevronRight} from "lucide-react";
 import {
   PRODUCT_DETAIL,
   REVIEWS,
-  SATISFACTION_DATA,
   RELATED_PRODUCTS,
 } from "@/lib/product-detail-mocks";
 
@@ -230,7 +228,6 @@ export default function ProductDetailPage() {
             <ProductTabs
               product={product}
               reviews={REVIEWS}
-              satisfaction={SATISFACTION_DATA}
             />
           )}
 
@@ -240,7 +237,7 @@ export default function ProductDetailPage() {
           {loading ? (
             <RelatedSkeleton/>
           ) : (
-            <RelatedProducts productId={parseInt(productId)} limit={6} />
+            <RelatedProducts productId={productId} limit={10} />
           )}
         </div>
 
@@ -248,11 +245,6 @@ export default function ProductDetailPage() {
         <aside className="hidden w-full md:block md:w-1/2 lg:w-[40%] md:sticky md:top-[40px] md:self-start">
           {loading ? <PanelSkeleton/> : <PurchasePanel product={product}/>}
         </aside>
-      </div>
-
-      {/* 함께 보면 좋은 상품 - 유사 상품 추천 (전체 너비) */}
-      <div className="mt-8 md:mt-12">
-        {!loading && <SimilarProducts productId={parseInt(productId)} limit={6} />}
       </div>
 
       {/* ---- Mobile Bottom Buy Bar ---- */}

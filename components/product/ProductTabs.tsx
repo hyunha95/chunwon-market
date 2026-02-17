@@ -15,13 +15,11 @@ import ReviewList from "@/components/review/ReviewList";
 import type {
   ProductDetail,
   ReviewItem,
-  SatisfactionItem,
 } from "@/lib/product-detail-mocks";
 
 interface ProductTabsProps {
   product: ProductDetail;
   reviews: ReviewItem[];
-  satisfaction: SatisfactionItem[];
 }
 
 /* ---- Tab Keys ---- */
@@ -88,21 +86,56 @@ function DescriptionTab({ product }: { product: ProductDetail }) {
 /* ==================================================================== */
 /*  Detail Images Tab                                                   */
 /* ==================================================================== */
+const DETAIL_IMAGE_COLLAPSED_HEIGHT = 500;
+
 function DetailImagesTab() {
+  const [expanded, setExpanded] = useState(false);
+
   return (
-    <div className="flex flex-col items-center gap-3 md:gap-4">
-      {Array.from({ length: 3 }).map((_, i) => (
-        <div
-          key={i}
-          className="flex w-full max-w-lg flex-col items-center justify-center gap-2 rounded-lg bg-muted py-16 md:py-24"
-        >
-          <ImageIcon className="h-12 w-12 text-muted-foreground/30" />
-          <span className="text-xs text-muted-foreground/50">
-            {"상세 이미지 "}
-            {i + 1}
-          </span>
+    <div className="relative">
+      <div
+        className="overflow-hidden transition-[max-height] duration-500 ease-in-out"
+        style={{ maxHeight: expanded ? "none" : `${DETAIL_IMAGE_COLLAPSED_HEIGHT}px` }}
+      >
+        <div className="flex flex-col items-center gap-3 md:gap-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="flex w-full max-w-lg flex-col items-center justify-center gap-2 rounded-lg bg-muted py-16 md:py-24"
+            >
+              <ImageIcon className="h-12 w-12 text-muted-foreground/30" />
+              <span className="text-xs text-muted-foreground/50">
+                {"상세 이미지 "}
+                {i + 1}
+              </span>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+
+      {!expanded && (
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+      )}
+
+      <div className={`flex justify-center ${expanded ? "mt-6" : "-mt-2 relative z-10"}`}>
+        <button
+          type="button"
+          onClick={() => setExpanded(!expanded)}
+          className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-6 py-2.5 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-muted"
+        >
+          {expanded ? (
+            <>
+              {"상품 이미지 접기"}
+              <ChevronUp className="h-4 w-4" />
+            </>
+          ) : (
+            <>
+              {"상품 이미지 더보기"}
+              <ChevronDown className="h-4 w-4" />
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }
@@ -201,7 +234,6 @@ function SpecificationsTab({ product }: { product: ProductDetail }) {
 export default function ProductTabs({
   product,
   reviews,
-  satisfaction,
 }: ProductTabsProps) {
   const [activeTab, setActiveTab] = useState<TabKey>("description");
   const tabBarRef = useRef<HTMLDivElement>(null);
@@ -315,7 +347,6 @@ export default function ProductTabs({
             <ReviewSummary
               rating={product.rating}
               reviewCount={product.reviewCount}
-              satisfaction={satisfaction}
               starDistribution={product.starDistribution}
             />
             <Separator />

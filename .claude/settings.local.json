@@ -8,7 +8,9 @@
       "Bash(pnpm build:*)",
       "Bash(cat:*)",
       "Bash(xargs -I {} bash -c \"echo ''=== {} ==='' && head -20 {}\")",
-      "Bash(pnpm remove:*)"
+      "Bash(pnpm remove:*)",
+      "Bash(git log:*)",
+      "Bash(unzip:*)"
     ]
   }
 }

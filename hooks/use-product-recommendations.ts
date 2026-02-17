@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   getPersonalizedRecommendations,
-  getProductBasedRecommendations,
   getSimilarProducts,
   recordInteraction,
   getProduct,
@@ -19,9 +18,7 @@ export const productKeys = {
   recommendations: () => [...productKeys.all, 'recommendations'] as const,
   personalized: (userId: string, limit?: number) =>
     [...productKeys.recommendations(), 'personalized', userId, limit] as const,
-  productBased: (productId: number, limit?: number) =>
-    [...productKeys.recommendations(), 'product-based', productId, limit] as const,
-  similar: (productId: number, limit?: number) =>
+  similar: (productId: string, limit?: number) =>
     [...productKeys.recommendations(), 'similar', productId, limit] as const,
 };
 
@@ -43,27 +40,11 @@ export function usePersonalizedRecommendations(
 }
 
 /**
- * 상품 기반 추천 조회 훅
- */
-export function useProductBasedRecommendations(
-  productId: number,
-  limit: number = 10,
-  options?: {
-    enabled?: boolean;
-  }
-) {
-  return useQuery<ProductRecommendation[], Error>({
-    queryKey: productKeys.productBased(productId, limit),
-    queryFn: () => getProductBasedRecommendations(productId, limit),
-    enabled: options?.enabled !== false && !!productId,
-  });
-}
-
-/**
  * 유사 상품 추천 조회 훅 (함께 보면 좋은 상품)
+ * 백엔드: GET /api/recommendations/similar/{productId}
  */
 export function useSimilarProducts(
-  productId: number,
+  productId: string,
   limit: number = 6,
   options?: {
     enabled?: boolean;
@@ -127,38 +108,9 @@ export function usePersonalizedRecommendationsWithDetails(
     name: rec.name,
     price: rec.price,
     image: rec.imageUrl,
-    category: rec.categoryId,
-    rating: 0, // TODO: 리뷰 정보 추가 시 백엔드에서 포함
-    reviewCount: 0, // TODO: 리뷰 정보 추가 시 백엔드에서 포함
-  }));
-
-  return {
-    recommendations: recommendationsQuery.data,
-    products,
-    isLoading: recommendationsQuery.isLoading,
-    error: recommendationsQuery.error,
-  };
-}
-
-/**
- * 추천 상품 + 상품 상세 정보 통합 조회 훅
- * 백엔드 응답에 상품 정보가 포함되어 있으므로 별도 조회 없이 변환만 수행
- */
-export function useProductBasedRecommendationsWithDetails(
-  productId: number,
-  limit: number = 6
-) {
-  const recommendationsQuery = useProductBasedRecommendations(productId, limit);
-
-  // ProductRecommendation을 Product 형식으로 변환
-  const products: Product[] | undefined = recommendationsQuery.data?.map((rec) => ({
-    id: rec.productId,
-    name: rec.name,
-    price: rec.price,
-    image: rec.imageUrl,
-    category: rec.categoryId,
-    rating: 0, // TODO: 리뷰 정보 추가 시 백엔드에서 포함
-    reviewCount: 0, // TODO: 리뷰 정보 추가 시 백엔드에서 포함
+    category: rec.category,
+    rating: 0,
+    reviewCount: 0,
   }));
 
   return {
@@ -174,7 +126,7 @@ export function useProductBasedRecommendationsWithDetails(
  * 백엔드 응답에 상품 정보가 포함되어 있으므로 별도 조회 없이 변환만 수행
  */
 export function useSimilarProductsWithDetails(
-  productId: number,
+  productId: string,
   limit: number = 6
 ) {
   const recommendationsQuery = useSimilarProducts(productId, limit);
@@ -185,9 +137,9 @@ export function useSimilarProductsWithDetails(
     name: rec.name,
     price: rec.price,
     image: rec.imageUrl,
-    category: rec.categoryId,
-    rating: 0, // TODO: 리뷰 정보 추가 시 백엔드에서 포함
-    reviewCount: 0, // TODO: 리뷰 정보 추가 시 백엔드에서 포함
+    category: rec.category,
+    rating: 0,
+    reviewCount: 0,
   }));
 
   return {
@@ -212,7 +164,7 @@ export function useRecordInteraction() {
         queryKey: productKeys.personalized(variables.userId),
       });
       queryClient.invalidateQueries({
-        queryKey: productKeys.productBased(parseInt(variables.productId)),
+        queryKey: productKeys.similar(variables.productId),
       });
     },
   });

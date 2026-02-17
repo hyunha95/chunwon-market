@@ -105,7 +105,7 @@ export default function Header({ user }: HeaderProps) {
 
       {/* Main Header Row */}
       <div className="mx-auto max-w-[1200px] px-4">
-        <div className="flex items-center justify-between gap-4 py-3 md:gap-6 md:py-4">
+        <div className="flex items-center justify-between gap-4 py-1 md:gap-6">
           {/* Logo */}
           <Link
             href="/"

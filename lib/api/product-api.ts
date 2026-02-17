@@ -1,14 +1,14 @@
 import apiClient from '../api-client';
 
 export interface ProductRecommendation {
-  productId: number;
+  productId: string;
   score: number;
   reason: string;
   // 상품 정보 (백엔드에서 함께 응답)
   name: string;
   imageUrl: string;
   price: number;
-  categoryId: string;
+  category: string;
 }
 
 export interface UserInteraction {
@@ -18,7 +18,7 @@ export interface UserInteraction {
 }
 
 export interface Product {
-  id: number;
+  id: number | string;
   name: string;
   price: number;
   originalPrice?: number;
@@ -53,21 +53,8 @@ export const getPersonalizedRecommendations = async (
   limit: number = 10
 ): Promise<ProductRecommendation[]> => {
   const response = await apiClient.get('/api/recommendations/personalized', {
-    params: { userId, limit },
-  });
-  return response.data;
-};
-
-/**
- * 상품 기반 추천 조회 (유사 상품)
- * 백엔드 엔드포인트: GET /api/recommendations/similar/{productId}
- */
-export const getProductBasedRecommendations = async (
-  productId: number,
-  limit: number = 10
-): Promise<ProductRecommendation[]> => {
-  const response = await apiClient.get(`/api/recommendations/similar/${productId}`, {
     params: { limit },
+    headers: { 'X-User-Id': userId },
   });
   return response.data;
 };
@@ -77,8 +64,8 @@ export const getProductBasedRecommendations = async (
  * 백엔드 엔드포인트: GET /api/recommendations/similar/{productId}
  */
 export const getSimilarProducts = async (
-  productId: number,
-  limit: number = 6
+  productId: string,
+  limit: number = 10
 ): Promise<ProductRecommendation[]> => {
   const response = await apiClient.get(`/api/recommendations/similar/${productId}`, {
     params: { limit },

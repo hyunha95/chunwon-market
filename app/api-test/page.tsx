@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import {
   usePersonalizedRecommendations,
-  useProductBasedRecommendations,
+  useSimilarProducts,
   useRecordInteraction,
 } from '@/hooks/use-product-recommendations';
 import { Button } from '@/components/ui/button';
@@ -29,7 +29,7 @@ export default function ApiTestPage() {
     isLoading: isLoadingProductBased,
     error: productBasedError,
     refetch: refetchProductBased,
-  } = useProductBasedRecommendations(parseInt(productId), 5, {
+  } = useSimilarProducts(productId, 5, {
     enabled: false, // 수동으로 트리거
   });
 
@@ -184,8 +184,8 @@ export default function ApiTestPage() {
         <CardContent>
           <div className="space-y-2 text-sm font-mono">
             <div>Base URL: <strong>{process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080'}</strong></div>
-            <div>개인화 추천: <code>GET /api/recommendations/personalized?userId=user1&limit=5</code></div>
-            <div>상품 기반 추천: <code>GET /api/recommendations/product-based?productId=1&limit=5</code></div>
+            <div>개인화 추천: <code>GET /api/recommendations/personalized (X-User-Id 헤더)</code></div>
+            <div>유사 상품 추천: <code>GET /api/recommendations/similar/{'{productId}'}?limit=5</code></div>
             <div>상호작용 기록: <code>POST /api/interactions</code></div>
           </div>
         </CardContent>

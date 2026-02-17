@@ -3,19 +3,19 @@
 import Link from "next/link";
 import { ChevronRight, Loader2 } from "lucide-react";
 import ProductCard from "@/components/product/ProductCard";
-import { useProductBasedRecommendationsWithDetails } from "@/hooks/use-product-recommendations";
+import { useSimilarProductsWithDetails } from "@/hooks/use-product-recommendations";
 
 interface RelatedProductsProps {
-  productId: number;
+  productId: string;
   limit?: number;
 }
 
 export default function RelatedProducts({
   productId,
-  limit = 6,
+  limit = 10,
 }: RelatedProductsProps) {
   const { recommendations, products, isLoading, error } =
-    useProductBasedRecommendationsWithDetails(productId, limit);
+    useSimilarProductsWithDetails(productId, limit);
 
   return (
     <section>
