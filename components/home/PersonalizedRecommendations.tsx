@@ -5,6 +5,7 @@ import ProductCard from "@/components/product/ProductCard";
 import Link from "next/link";
 import { ChevronRight, Loader2 } from "lucide-react";
 import { usePersonalizedRecommendationsWithDetails } from "@/hooks/use-product-recommendations";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { getUserId } from "@/lib/user";
 
 interface PersonalizedRecommendationsProps {
@@ -16,12 +17,14 @@ export default function PersonalizedRecommendations({
   userId: userIdProp,
   limit = 6,
 }: PersonalizedRecommendationsProps) {
-  const [userId, setUserId] = useState<string>("guest");
+  const { user, isLoading: isAuthLoading } = useUser();
+  const [userId, setUserId] = useState<string>("");
 
-  // 클라이언트 사이드에서 사용자 ID 가져오기
+  // Auth0 로딩 완료 후 userId 결정: 로그인 → user.sub, 비로그인 → 임시 ID
   useEffect(() => {
-    setUserId(userIdProp || getUserId());
-  }, [userIdProp]);
+    if (isAuthLoading) return;
+    setUserId(userIdProp || user?.sub || getUserId());
+  }, [userIdProp, user?.sub, isAuthLoading]);
 
   const { recommendations, products, isLoading, error } =
     usePersonalizedRecommendationsWithDetails(userId, limit);

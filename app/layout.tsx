@@ -1,8 +1,11 @@
 import React from "react"
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_KR } from "next/font/google";
+import { Auth0Provider } from "@auth0/nextjs-auth0/client";
 import { Toaster } from "@/components/ui/toaster";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { AxiosTokenProvider } from "@/components/providers/axios-token-provider";
+import { auth0 } from "@/lib/auth0";
 
 import "./globals.css";
 
@@ -26,18 +29,24 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth0.getSession();
+
   return (
     <html lang="ko" className={`${notoSansKR.variable} bg-background`}>
       <body className="font-sans antialiased">
-        <QueryProvider>
-          {children}
-          <Toaster />
-        </QueryProvider>
+        <Auth0Provider user={session?.user}>
+          <AxiosTokenProvider>
+            <QueryProvider>
+              {children}
+              <Toaster />
+            </QueryProvider>
+          </AxiosTokenProvider>
+        </Auth0Provider>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import {useState, useEffect} from "react";
 import Link from "next/link";
 import {useParams} from "next/navigation";
 import {useRecordInteraction} from "@/hooks/use-product-recommendations";
+import {useUser} from "@auth0/nextjs-auth0/client";
 import {getUserId} from "@/lib/user";
 import {
   Breadcrumb,
@@ -141,6 +142,7 @@ function RelatedSkeleton() {
 export default function ProductDetailPage() {
   const params = useParams();
   const productId = params.id as string;
+  const { user, isLoading: isAuthLoading } = useUser();
   const [loading, setLoading] = useState(true);
   const recordInteraction = useRecordInteraction();
 
@@ -149,18 +151,18 @@ export default function ProductDetailPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // 상품 조회 시 VIEW 이벤트 기록
+  // 상품 조회 시 VIEW 이벤트 기록 (Auth0 로딩 완료 후)
   useEffect(() => {
-    if (!productId) return;
+    if (!productId || isAuthLoading) return;
 
-    const userId = getUserId();
+    const userId = user?.sub || getUserId();
     recordInteraction.mutate({
       userId,
       productId,
       interactionType: 'VIEW',
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productId]); // recordInteraction은 의도적으로 제외 (무한루프 방지)
+  }, [productId, user?.sub, isAuthLoading]); // recordInteraction은 의도적으로 제외 (무한루프 방지)
 
   const product = PRODUCT_DETAIL;
 

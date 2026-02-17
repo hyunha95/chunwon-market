@@ -4,7 +4,11 @@
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(pnpm add:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(pnpm build:*)",
+      "Bash(cat:*)",
+      "Bash(xargs -I {} bash -c \"echo ''=== {} ==='' && head -20 {}\")",
+      "Bash(pnpm remove:*)"
     ]
   }
 }

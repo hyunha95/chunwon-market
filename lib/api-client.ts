@@ -1,28 +1,19 @@
 import axios from 'axios';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080';
+
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080',
+  baseURL: API_BASE_URL,
   headers: {
+    Accept: 'application/json',
     'Content-Type': 'application/json',
   },
   timeout: 10000,
 });
 
-// 요청 인터셉터 (필요시 인증 토큰 추가 가능)
-apiClient.interceptors.request.use(
-  (config) => {
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-// 응답 인터셉터 (에러 처리)
+// 응답 인터셉터: 에러 처리
 apiClient.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
     console.error('API Error:', error.response?.data || error.message);
     return Promise.reject(error);

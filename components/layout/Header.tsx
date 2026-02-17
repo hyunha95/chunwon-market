@@ -15,7 +15,18 @@ import {
   ShoppingCart,
   Menu,
   X,
+  LogOut,
+  MapPin,
 } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import TopBar from "./TopBar";
 import CategoryMegaMenu from "./CategoryMegaMenu";
 import AddressPickupModal from "@/components/modals/AddressPickupModal";
@@ -26,6 +37,17 @@ type RisingKeyword = {
   label: string;
   movement: "up" | "same" | "new";
 };
+
+export interface HeaderUser {
+  name?: string;
+  email?: string;
+  picture?: string;
+  sub?: string;
+}
+
+interface HeaderProps {
+  user: HeaderUser | null;
+}
 
 const DESKTOP_RECOMMENDED_KEYWORDS = [
   { label: "수납", symbol: "수", color: "bg-[#f1f5f9] text-[#334155]" },
@@ -49,7 +71,7 @@ const DESKTOP_RISING_KEYWORDS: RisingKeyword[] = [
   { rank: 10, label: "선반", movement: "same" },
 ];
 
-export default function Header() {
+export default function Header({ user }: HeaderProps) {
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -83,7 +105,7 @@ export default function Header() {
 
       {/* Main Header Row */}
       <div className="mx-auto max-w-[1200px] px-4">
-        <div className="flex items-center gap-4 py-3 md:gap-6 md:py-4">
+        <div className="flex items-center justify-between gap-4 py-3 md:gap-6 md:py-4">
           {/* Logo */}
           <Link
             href="/"
@@ -202,16 +224,64 @@ export default function Header() {
               </Link>
             </Button>
 
-            <AddressPickupModal>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="hidden h-8 w-8 items-center justify-center rounded-full ring-2 ring-transparent transition-all hover:ring-accent/50 focus-visible:outline-none focus-visible:ring-accent md:flex"
+                  >
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={user.picture || undefined} alt={user.name || ""} />
+                      <AvatarFallback className="bg-accent/20 text-xs font-medium text-accent-foreground">
+                        {user.name?.charAt(0)?.toUpperCase() || "U"}
+                      </AvatarFallback>
+                    </Avatar>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64">
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="h-10 w-10">
+                        <AvatarImage src={user.picture || undefined} alt={user.name || ""} />
+                        <AvatarFallback className="bg-accent/20 text-sm font-medium text-accent-foreground">
+                          {user.name?.charAt(0)?.toUpperCase() || "U"}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col gap-0.5 overflow-hidden">
+                        <span className="truncate text-sm font-medium">{user.name}</span>
+                        <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+                      </div>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <AddressPickupModal>
+                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                      <MapPin className="mr-2 h-4 w-4" />
+                      배송지 관리
+                    </DropdownMenuItem>
+                  </AddressPickupModal>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <a href="/auth/logout" className="text-destructive focus:text-destructive">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      로그아웃
+                    </a>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
               <Button
+                asChild
                 variant="ghost"
                 size="sm"
                 className="hidden flex-col items-center gap-0.5 text-foreground hover:text-accent md:flex"
               >
-                <User className="h-5 w-5" />
-                <span className="text-[10px]">로그인</span>
+                <a href="/auth/login">
+                  <User className="h-5 w-5" />
+                  <span className="text-[10px]">로그인</span>
+                </a>
               </Button>
-            </AddressPickupModal>
+            )}
             <Button
               variant="ghost"
               size="sm"
